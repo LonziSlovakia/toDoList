@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+import { Dropdown } from 'react-bootstrap'
 
-function App() {
+const App = () => {
+  const [color, setColor] = useState("purple")
+
+  const handleChangeColor = () => {
+    setColor("red")
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className={`bg-${color}-300 min-h-screen text-center font-robotoslab`}>
+      <header className="flex">
+      <Dropdown drop="right">
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          Dropdown Button
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      <h1 className={`text-${color}-700 font-sansita text-5xl text-center py-4`}>Marekova ToDoList appka</h1>
       </header>
+      <div>
+
+      </div>
     </div>
   );
 }
