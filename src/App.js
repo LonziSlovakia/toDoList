@@ -2,20 +2,23 @@ import React from 'react';
 import { Dropdown } from 'react-bootstrap'
 import List from './ListComponent'
 import ColorItem from './ColorComponent'
+import Form from './FormComponent.js'
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      color: 'purple'
+      color: 'purple',
+      tasks: ['Umyť si ruky']
     };
   }
 
   handleChangeColor = (color) => this.setState({ color });
+  handleChangeTasks = (task) => this.setState({ tasks: task });
 
   render() {
-    const { color } = this.state;
+    const { color, tasks } = this.state;
 
     return (
       <div className={`bg-${color}-300 min-h-screen text-center font-robotoslab`}>
@@ -35,7 +38,8 @@ class App extends React.Component {
           </Dropdown>
           <h1 className={`mx-8 text-${color}-700 font-sansita text-5xl text-center py-4`}>Marekov To-Do-List</h1>
         </header>
-        <List />
+        <List tasks={tasks} color={color} />
+        <Form onClick={this.handleChangeTasks} tasks={tasks} color={color} />
       </div >
     );
   }

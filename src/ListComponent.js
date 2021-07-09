@@ -1,6 +1,17 @@
-const List = () => {
+
+
+const List = (props) => {
+    const { color, tasks } = props;
+    console.log(tasks);
+
     return (
-        0
+        <>
+            <ul>
+                {tasks.map((task) =>
+                    <li> {task} </li>
+                )}
+            </ul>
+        </>
     )
 }
 
