@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "@tailwindcss/custom-forms": "tailwindcss/custom-forms",
     "autoprefixer": "^9",
     "postcss": "^7"
   }
