@@ -29,7 +29,7 @@ class App extends React.Component {
 
             <Dropdown.Menu className="mt-2">
               {['blue', 'red', 'pink', 'yellow', 'green', 'purple', 'gray'].map((color, i) => {
-                return (<ColorItem onClick={this.handleChangeColor} color={color} id={i} />)
+                return (<ColorItem onClick={this.handleChangeColor} color={color} id={i} key={i} />)
               })}
             </Dropdown.Menu>
           </Dropdown>
