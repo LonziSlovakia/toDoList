@@ -33,6 +33,7 @@ class App extends React.Component {
               })}
             </Dropdown.Menu>
           </Dropdown>
+
           <h1 className={`mx-8 text-${color}-700 font-sansita text-5xl text-center py-4`}>Marekov To-Do-List</h1>
         </header>
         <List color={color} />
