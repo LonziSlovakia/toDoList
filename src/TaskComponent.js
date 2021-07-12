@@ -18,6 +18,9 @@ function Task({ task, color, funcs: { softDelete, hardDelete, complete, editTask
     const handleRemoveTask = () => {
         softDelete(task.id)
     }
+    const handleCompleteTask = () => {
+        complete(task.id)
+    }
 
     const handleCompleteTask = () => {
         complete(task.id)

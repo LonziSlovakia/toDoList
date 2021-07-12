@@ -39,8 +39,8 @@ const List = (props) => {
         setTask(newTasks)
     }
     const handleSoftDeleteTask = (id) => {
-        const newTasks = [...tasks]
-        const task = newTasks.find(task => task.id === id)
+    const newTasks = [...tasks]
+    const task = newTasks.find(task => task.id === id)
         task.softDeleted = !task.softDeleted
         setTask(newTasks)
     }
