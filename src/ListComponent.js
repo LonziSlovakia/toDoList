@@ -10,7 +10,7 @@ const List = (props) => {
         { id: 2, task: 'Naučiť sa react', completed: true, softDeleted: false },
         { id: 3, task: 'Naučigfghfdgdfgť sa react', completed: true, softDeleted: false }
     ])
-    const [show, setShow] = useState('Úlohy')
+    const [show, setShow] = useState('Všetky')
 
     const handleChangeTask = (task) => {
         let ids = (tasks).map((task2) => task2.id)
@@ -20,36 +20,49 @@ const List = (props) => {
         setTask(newValue);
     };
 
-    const handleEditTask = (task) => {
-     
-        let newValue = 0
-        setTask()
+
+    // const handleEditTask = (task) => {
+    
+    //     let newValue = 0
+    //     setTask()
+    // }
+    const handleCompleteTask = (id) => {
+    const newTasks = [...tasks]
+    const task = newTasks.find(task => task.id === id)
+        task.completed = !task.completed
+        setTask(newTasks)
     }
     const handleSoftDeleteTask = (id) => {
-        const newTasks = [...tasks]
-        const task = newTasks.find(task => task.id === id)
+    const newTasks = [...tasks]
+    const task = newTasks.find(task => task.id === id)
         task.softDeleted = !task.softDeleted
         setTask(newTasks)
     }
 
     const handleDeleteTask = (task) => {
-     
-        let newValue = 0
-        setTask()
+        const newTasks = [...tasks]
+        setTask(newTasks.filter(task2 => task2.id !== task.id))
     }
 
     const showTasks = (show) => {
+        const funcs = {
+            softDelete: handleSoftDeleteTask,
+            hardDelete: handleDeleteTask,
+            complete:handleCompleteTask,
+            handleChangeTask
+        }
+
         if(show === "Úlohy"){
-            return (tasks.filter(task => !task.completed && !task.softDeleted)).map((task) => <Task softDelete={handleSoftDeleteTask} key={task.id} task={task} color={color} />
+            return (tasks.filter(task => !task.completed && !task.softDeleted)).map((task) => <Task funcs={funcs} key={task.id} task={task} color={color} />
             )
         }else if(show === "Všetky"){
-            return tasks.map((task) => <Task softDelete={handleSoftDeleteTask} key={task.id} task={task} color={color} />
+            return tasks.map((task) => <Task funcs={funcs} key={task.id} task={task} color={color} />
             )
         }else if(show === "Splnené"){
-            return (tasks.filter(task => task.completed)).map((task) => <Task softDelete={handleSoftDeleteTask} key={task.id} task={task} color={color} />
+            return (tasks.filter(task => task.completed)).map((task) => <Task funcs={funcs} key={task.id} task={task} color={color} />
             )
         }else if(show === "Kôš"){
-            return (tasks.filter(task => task.softDeleted)).map((task) => <Task softDelete={handleSoftDeleteTask} key={task.id} task={task} color={color} />
+            return (tasks.filter(task => task.softDeleted)).map((task) => <Task funcs={funcs} key={task.id} task={task} color={color} />
             )
         }
     }
@@ -59,10 +72,12 @@ const List = (props) => {
             <Form color={color} odoslanie={handleChangeTask} />
             <div className="mt-8 flex justify-center">
 
-                <ul className={`w-1/2 text-2xl bg-${color}-500 border-4 border-b-2 border-${color}-700 inline-block`}>
-                    <li className={`p-1 border-2 border-b-4 border-${color}-700 bg-${color}-400 tracking-wide`}>Úlohy:</li>
-                    {showTasks(show)}
-                </ul>
+                <div className={`w-1/2 text-2xl bg-${color}-500 border-4 border-b-2 border-${color}-700 inline-block`}>
+                        <p className={`p-1 border-2 border-b-4 border-${color}-700 bg-${color}-400 tracking-wide`}>Úlohy:</p>
+                    <ol>
+                        {showTasks(show)}
+                    </ol>
+                </div>
 
                 <Dropdown>
                     <Dropdown.Toggle drop="down" className={`mx-8 py-1 px-2 w-3/5 px-auto text-${color}-900 border-4 border-${color}-700 rounded-lg bg-${color}-300  hover:bg-${color}-400`}>
