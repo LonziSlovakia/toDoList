@@ -15,7 +15,7 @@ const List = (props) => {
 
     const handleChangeTask = (task) => {
         if (!task) {
-            window.alert("Zadajte názov úlohy.")
+            window.alert("Musíte zadať názov úlohy.")
             return
         }
         let ids = (tasks).map((task2) => task2.id)
