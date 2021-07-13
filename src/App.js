@@ -2,8 +2,8 @@ import React from 'react';
 import { Dropdown } from 'react-bootstrap'
 import List from './components/ListComponent'
 import ColorItem from './components/ColorComponent'
-
-
+import { connect } from 'react-redux';
+import * as actions from './actions';
 class App extends React.Component {
 
   constructor(props) {
@@ -42,5 +42,10 @@ class App extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  length: state.todos.length
+})
+
 
 export default App;

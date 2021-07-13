@@ -1,6 +1,9 @@
 import { Dropdown } from 'react-bootstrap'
 import React, { Component } from 'react'
-export default class ColorItem extends Component {
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+
+class ColorItem extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -23,3 +26,16 @@ export default class ColorItem extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    length: state.todos.length
+})
+
+const mapDispatchToProps = dispatch => ({
+    onSubmit: text => dispatch(actions.addTodo(text))
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ColorItem);

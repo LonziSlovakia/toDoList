@@ -2,56 +2,34 @@ import React, { useState } from 'react'
 import Form from './FormComponent'
 import Task from './TaskComponent'
 import { Dropdown } from 'react-bootstrap'
-export default class List extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            tasks: [{ id: 1, task: 'Dokončiť react appku', completed: false, softDeleted: true },
-            { id: 2, task: 'Naučiť sa react', completed: true, softDeleted: true },
-            { id: 3, task: 'Nebyť perfekcionalista', completed: true, softDeleted: false },
-            { id: 4, task: 'Deleted task', completed: false, softDeleted: false }],
-            show: 'Všetky'
-        }
-    }
-
-    setTask = (tasks) => this.setState({ tasks });
-    setShow = (show) => this.setState({ show });
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+class List extends React.Component {
+    setShow = (show) => {
+        this.props.rewriteShow(show);
+    };
 
     handleChangeTask = (task) => {
         if (!task || task.trim().length === 0) {
-            window.alert("Musíte zadať názov úlohy.")
+            window.alert("Musíte zadať názov úlohy.");
             return
         }
-        let ids = (this.state.tasks).map((task2) => task2.id)
-        let newId = Math.max(...ids) + 1;
-        let newTask = { id: newId, task: (task.charAt(0).toUpperCase() + task.slice(1)), completed: false, softDeleted: false }
-        let newValue = [...this.state.tasks, newTask]
-        this.setTask(newValue);
-    };
+       this.props.addTodo(task);
+    }
 
     editTask = (id, name) => {
-        const newTask = [...this.state.tasks]
-        const task = newTask.find(task => task.id === id)
-        task.task = name
-        this.setTask(newTask)
+        this.props.editTodo(name, id);
     }
 
     handleCompleteTask = (id) => {
-        const newTasks = [...this.state.tasks]
-        const task = newTasks.find(task => task.id === id)
-        task.completed = !task.completed
-        this.setTask(newTasks)
+        this.props.completeTodo(id);
     }
     handleSoftDeleteTask = (id) => {
-        const newTasks = [...this.state.tasks]
-        const task = newTasks.find(task => task.id === id)
-        task.softDeleted = !task.softDeleted
-        this.setTask(newTasks)
+        this.props.softDeleteTodo(id);
     }
 
     handleDeleteTask = (task) => {
-        const newTasks = [...this.state.tasks]
-        this.setTask(newTasks.filter(task2 => task2.id !== task.id))
+        this.props.removeTodo(task.id);
     }
 
     showTasks = (show) => {
@@ -80,13 +58,13 @@ export default class List extends React.Component {
                     <div className={`w-1/2 text-2xl bg-${this.props.color}-500 border-4 border-b-2 border-${this.props.color}-700 inline-block`}>
                         <p className={`p-1 border-2 border-b-4 border-${this.props.color}-700 bg-${this.props.color}-400 tracking-wide`}>Úlohy:</p>
                         <ol>
-                            {this.showTasks(this.state.show)}
+                            {this.showTasks(this.props.show)}
                         </ol>
                     </div>
 
                     <Dropdown>
                         <Dropdown.Toggle drop="down" className={`mx-8 py-1 px-2 w-3/5 px-auto text-${this.props.color}-900 border-4 border-${this.props.color}-700 rounded-lg bg-${this.props.color}-300  hover:bg-${this.props.color}-400`}>
-                            {this.state.show}
+                            {this.props.show}
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu className={`block py-1 mt-0.5 px-2 border-4 border-${this.props.color}-500 text-${this.props.color}-900 rounded-lg bg-${this.props.color}-300`}>
@@ -102,3 +80,21 @@ export default class List extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    show: state.todos.show
+  });
+
+const mapDispatchToProps = dispatch => ({
+    addTodo: text => dispatch(actions.addTodo(text)),
+    removeTodo: taskId => dispatch(actions.removeTodo(taskId)),
+    editTodo: (text,taskId) => dispatch(actions.editTodo(text,taskId)),
+    softDeleteTodo: taskId => dispatch(actions.softDeleteTodo(taskId)),
+    completeTodo: taskId => dispatch(actions.completeTodo(taskId)),
+    rewriteShow: text => dispatch(actions.rewriteShow(text))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(List);

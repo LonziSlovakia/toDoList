@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react'
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit2 } from "react-icons/fi";
 import { FiXSquare } from "react-icons/fi";
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 function Task({ task, color, softDelete, hardDelete, complete, editTask }) {
     const softDeletedClasses = task.softDeleted ? `bg-${color}-100` : `bg-${color}-300`
@@ -78,4 +80,6 @@ function Task({ task, color, softDelete, hardDelete, complete, editTask }) {
     )
 }
 
-export default Task
+
+export default Task;
+

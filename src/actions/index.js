@@ -29,3 +29,9 @@ export const completeTodo = taskId => ({
     taskId 
   }
 })
+export const rewriteShow = text => ({
+  type: 'REWRITE_SHOW',
+  payload: {
+    text 
+  }
+})
