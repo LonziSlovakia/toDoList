@@ -14,7 +14,7 @@ const List = (props) => {
     const [show, setShow] = useState('Všetky')
 
     const handleChangeTask = (task) => {
-        if (!task) {
+        if (!task || task.trim().length === 0) {
             window.alert("Musíte zadať názov úlohy.")
             return
         }
