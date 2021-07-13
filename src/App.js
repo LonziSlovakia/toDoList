@@ -1,7 +1,8 @@
 import React from 'react';
 import { Dropdown } from 'react-bootstrap'
-import List from './ListComponent'
-import ColorItem from './ColorComponent'
+import List from './components/ListComponent'
+import ColorItem from './components/ColorComponent'
+
 
 class App extends React.Component {
 
