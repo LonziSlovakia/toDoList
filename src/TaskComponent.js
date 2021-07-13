@@ -3,7 +3,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit2 } from "react-icons/fi";
 import { FiXSquare } from "react-icons/fi";
 
-function Task({ task, color, funcs: { softDelete, hardDelete, complete, editTask } }) {
+function Task({ task, color, softDelete, hardDelete, complete, editTask }) {
     const softDeletedClasses = task.softDeleted ? `bg-${color}-100` : `bg-${color}-300`
     const softDeletedIcon = task.softDeleted ? `bg-red-300 hover:bg-red-400` : `bg-${color}-300 hover:bg-${color}-400`
     const completedClass = task.completed ? 'line-through' : ''
@@ -58,11 +58,11 @@ function Task({ task, color, funcs: { softDelete, hardDelete, complete, editTask
 
     if (edit.id) {
         return (
-            <div className="flex flex-col items-stretch md:items-center md:flex-row mb-3">
+            <div className={`flex flex-col items-stretch md:items-center md:flex-row bg-${color}-300 border-b-2 border-t-2 border-${color}-700`}>
                 <label className="flex-1 flex items-center m-1">
-                    <input ref={taskNameRef} autoFocus type="text" className="flex-auto px-3 py-1 rounded-lg bg-input-dark font-medium text-text-primary placeholder-text-secondary focus:outline-none focus:ring-4 focus:ring-input-dark focus:ring-opacity-50" value={edit.value} onChange={handleTaskChange} onKeyDown={handleKeyDown} />
+                    <input ref={taskNameRef} autoFocus type="text" className={`flex-auto m-2 px-3 py-1 rounded-lg bg-input-dark font-medium text-text-primary placeholder-text-secondary focus:outline-none focus:ring-4 focus:ring-${color}-700 focus:ring-opacity-50`} value={edit.value} onChange={handleTaskChange} onKeyDown={handleKeyDown} />
                 </label>
-                <button className="rounded-lg px-3 py-1 m-1 bg-input-light font-medium text-text-primary focus:outline-none focus:ring-4 focus:ring-input-light focus:ring-opacity-50 active:bg-input-dark" onClick={handleSaveTask}>Save task</button>
+                <button className={`rounded-lg px-3 py-1 m-1 font-medium focus:outline-none focus:ring-4 focus:ring-${color}-700 focus:ring-opacity-50 active:bg-input-dark`} onClick={handleSaveTask}>Uložiť zmeny</button>
             </div>
         )
     }
@@ -70,7 +70,7 @@ function Task({ task, color, funcs: { softDelete, hardDelete, complete, editTask
     return (
         <li className={`py-1 px-2 border-b-2 border-t-2 border-${color}-700 text-${color}-900 ${softDeletedClasses} flex items-center`}>
             <div className={`mr-auto ml-auto break-all ${completedClass}`}>{task.task}</div>
-            <div><input type="checkbox" className="form-checkbox ml-6 mr-1 mb-1 p-2" onChange={handleCompleteTask} checked={task.completed} /></div>
+            <div><input type="checkbox" className={`form-checkbox ml-6 mr-1 mb-1 p-2 rounded focus:outline-none focus:ring-4 focus:ring-${color}-700 focus:ring-opacity-50`} onChange={handleCompleteTask} checked={task.completed} /></div>
             <div className={`hover:bg-${color}-400 rounded-lg p-1`} onClick={handleEditTask}><FiEdit2 /></div>
             <div className={`${softDeletedIcon} rounded-lg p-1`} onClick={handleRemoveTask}><RiDeleteBin6Line /></div>
             <div className={`hover:bg-${color}-400 rounded-lg p-1`} onClick={() => hardDelete(task)}><FiXSquare /></div>

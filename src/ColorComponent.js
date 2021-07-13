@@ -1,15 +1,25 @@
 import { Dropdown } from 'react-bootstrap'
+import React, { Component } from 'react'
+export default class ColorItem extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            color: this.props.color,
+            id: this.props.id,
+            onClick: this.props.onClick
+        }
+    }
 
-const ColorItem = (props) => {
-    const { color, id, onClick } = props;
-
-    return (
-        <Dropdown.Item href={`#/color-${id}`} >
-            <div onClick={() => onClick(color)} className={`-ml-2 mt-0.5 px-2 border-4 border-${color}-500 text-${color}-900 rounded-lg bg-${color}-300 hover:bg-${color}-400`}>
-                {color}
+    render() {
+        const { color, id, onClick } = this.state;
+        return (
+            <div>
+                <Dropdown.Item href={`#/color-${id}`} >
+                    <div onClick={() => onClick(color)} className={`-ml-2 mt-0.5 px-2 border-4 border-${color}-500 text-${color}-900 rounded-lg bg-${color}-300 hover:bg-${color}-400`}>
+                        {color}
+                    </div>
+                </Dropdown.Item>
             </div>
-        </Dropdown.Item>
-    )
+        )
+    }
 }
-
-export default ColorItem;
