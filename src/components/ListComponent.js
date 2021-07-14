@@ -12,8 +12,7 @@ class List extends React.Component {
     showTasks = (show) => {
         let array = this.props.tasks
         console.log(array);
-        // array = array.sort(function(a, b){return (Number(b.completed) - Number(a.completed))});
-        array = array.sort(function(a, b){return (b.completed )});
+        array = array.sort(function (a, b) { return (b.completed - a.completed) });
         console.log(array);
 
         if (show === "Úlohy") {
@@ -23,8 +22,9 @@ class List extends React.Component {
             return this.props.tasks.map((task) => <Task key={task.id} task={task} />
             )
         } else if (show === "Splnené") {
-            return (this.props.tasks.filter(task => task.completed)).map((task) => <Task key={task.id} task={task} />
-            )
+            return (
+                this.props.tasks.filter(task => task.completed)).map((task) => <Task key={task.id} task={task} />
+                )
         } else if (show === "Kôš") {
             return (this.props.tasks.filter(task => task.softDeleted)).map((task) => <Task key={task.id} task={task} />
             )
@@ -36,7 +36,7 @@ class List extends React.Component {
         return (
             <>
                 <Form />
-                <div className="mt-8 flex justify-center">
+                <div className="mt-8 flex justify-center pb-24">
 
                     <div className={`w-1/2 text-2xl bg-${this.props.color}-500 border-4 border-b-2 border-${this.props.color}-700 inline-block`}>
                         <p className={`p-1 border-2 border-b-4 border-${this.props.color}-700 bg-${this.props.color}-400 tracking-wide`}>Úlohy:</p>
@@ -68,12 +68,12 @@ const mapStateToProps = state => ({
     color: state.color,
     show: state.show,
     tasks: state.todos
-  });
+});
 
 const mapDispatchToProps = dispatch => ({
     addTodo: text => dispatch(actions.addTodo(text)),
     removeTodo: taskId => dispatch(actions.removeTodo(taskId)),
-    editTodo: (text,taskId) => dispatch(actions.editTodo(text,taskId)),
+    editTodo: (text, taskId) => dispatch(actions.editTodo(text, taskId)),
     softDeleteTodo: taskId => dispatch(actions.softDeleteTodo(taskId)),
     completeTodo: taskId => dispatch(actions.completeTodo(taskId)),
     rewriteShow: text => dispatch(actions.rewriteShow(text))
@@ -82,4 +82,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(List);
+)(List);
