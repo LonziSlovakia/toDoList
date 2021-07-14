@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Form from './FormComponent'
 import Task from './TaskComponent'
 import { Dropdown } from 'react-bootstrap'
@@ -9,41 +9,18 @@ class List extends React.Component {
         this.props.rewriteShow(show);
     };
 
-    handleChangeTask = (task) => {
-        if (!task || task.trim().length === 0) {
-            window.alert("Musíte zadať názov úlohy.");
-            return
-        }
-       this.props.addTodo(task);
-    }
-
-    editTask = (id, name) => {
-        this.props.editTodo(name, id);
-    }
-
-    handleCompleteTask = (id) => {
-        this.props.completeTodo(id);
-    }
-    handleSoftDeleteTask = (id) => {
-        this.props.softDeleteTodo(id);
-    }
-
-    handleDeleteTask = (task) => {
-        this.props.removeTodo(task.id);
-    }
-
     showTasks = (show) => {
         if (show === "Úlohy") {
-            return (this.state.tasks.filter(task => !task.completed && !task.softDeleted)).map((task) => <Task softDelete={this.handleSoftDeleteTask} hardDelete={this.handleDeleteTask} complete={this.handleCompleteTask} editTask={this.editTask} key={task.id} task={task} color={this.props.color} />
+            return (this.props.tasks.filter(task => !task.completed && !task.softDeleted)).map((task) => <Task key={task.id} task={task} />
             )
         } else if (show === "Všetky") {
-            return this.state.tasks.map((task) => <Task softDelete={this.handleSoftDeleteTask} hardDelete={this.handleDeleteTask} complete={this.handleCompleteTask} editTask={this.editTask} key={task.id} task={task} color={this.props.color} />
+            return this.props.tasks.map((task) => <Task key={task.id} task={task} />
             )
         } else if (show === "Splnené") {
-            return (this.state.tasks.filter(task => task.completed)).map((task) => <Task softDelete={this.handleSoftDeleteTask} hardDelete={this.handleDeleteTask} complete={this.handleCompleteTask} editTask={this.editTask} key={task.id} task={task} color={this.props.color} />
+            return (this.props.tasks.filter(task => task.completed)).map((task) => <Task key={task.id} task={task} />
             )
         } else if (show === "Kôš") {
-            return (this.state.tasks.filter(task => task.softDeleted)).map((task) => <Task softDelete={this.handleSoftDeleteTask} hardDelete={this.handleDeleteTask} complete={this.handleCompleteTask} editTask={this.editTask} key={task.id} task={task} color={this.props.color} />
+            return (this.props.tasks.filter(task => task.softDeleted)).map((task) => <Task key={task.id} task={task} />
             )
         }
     }
@@ -52,7 +29,7 @@ class List extends React.Component {
 
         return (
             <>
-                <Form color={this.props.color} odoslanie={this.handleChangeTask} />
+                <Form />
                 <div className="mt-8 flex justify-center">
 
                     <div className={`w-1/2 text-2xl bg-${this.props.color}-500 border-4 border-b-2 border-${this.props.color}-700 inline-block`}>
@@ -82,7 +59,9 @@ class List extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    show: state.todos.show
+    color: state.color,
+    show: state.show,
+    tasks: state.todos
   });
 
 const mapDispatchToProps = dispatch => ({

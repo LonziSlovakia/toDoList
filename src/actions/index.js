@@ -1,3 +1,8 @@
+
+//
+//  REDUCER: SHOW STATE
+//
+
 export const addTodo = text => ({
   type: 'ADD_TODO',
   payload: {
@@ -29,8 +34,24 @@ export const completeTodo = taskId => ({
     taskId 
   }
 })
+
+//
+//  REDUCER: SHOW STATE
+//
+
 export const rewriteShow = text => ({
   type: 'REWRITE_SHOW',
+  payload: {
+    text 
+  }
+})
+
+//
+//  REDUCER: COLOR STATE
+//
+
+export const rewriteColor = text => ({
+  type: 'REWRITE_COLOR',
   payload: {
     text 
   }

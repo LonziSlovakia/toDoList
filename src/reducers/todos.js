@@ -29,14 +29,14 @@ const todos = (state = INIT_STATE, action) => {
     case 'SOFTDELETE_TODO':
       return state.map((task) => {
         if (task.id === action.payload.taskId) {
-          return { ...task, softDeleted: true };
+          return { ...task, softDeleted: !task.softDeleted };
         }
         return task;
       });
     case 'COMPLETE_TODO':
       return state.map((task) => {
         if (task.id === action.payload.taskId) {
-          return { ...task, completed: true };
+          return { ...task, completed: !task.completed };
         }
         return task;
       });
