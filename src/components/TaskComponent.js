@@ -9,7 +9,10 @@ class Task extends React.Component {
     constructor(task) {
         super();
         this.taskNameRef = React.createRef(null)
-        this.state = { edit: '' }
+        this.state = {
+            id: null,
+            value: ''
+        }
     }
 
     handleSoftDeleteTask = (id) => {
@@ -25,12 +28,11 @@ class Task extends React.Component {
     }
 
     handleEditTask = (task) => {
-        console.log("chichi");
         this.setState({ id: this.props.task.id, value: this.props.task.task })
     }
 
     handleTaskChange = (value) => {
-        this.setState({ ...this.state.edit, value: value.target.value })
+        this.setState({value: value.target.value })
     }
 
     handleSaveTask = () => {
@@ -43,7 +45,8 @@ class Task extends React.Component {
                 })
                 return
             }
-            this.props.editTask(this.state.edit.id, name)
+            this.props.editTask(name, this.state.id)
+            console.log(name,this.state.id);
             this.taskNameRef.current.value = ''
             this.setState({
                 id: null,
@@ -66,21 +69,21 @@ class Task extends React.Component {
 
         this.taskNameRef?.current?.focus()
 
-        if (this.state.edit.id) {
+        if (this.state.id) {
             return (
                 <div className={`flex flex-col items-stretch md:items-center md:flex-row bg-${this.props.color}-300 border-b-2 border-t-2 border-${this.props.color}-700`}>
                     <label className="flex-1 flex items-center m-1">
-                        <input ref={this.taskNameRef} autoFocus type="text" className={`flex-auto m-2 px-3 py-1 rounded-lg bg-input-dark font-medium text-text-primary placeholder-text-secondary focus:outline-none focus:ring-4 focus:ring-${this.props.color}-700 focus:ring-opacity-50`} value={this.state.edit.value} onChange={this.handleTaskChange} onKeyDown={this.handleKeyDown} />
+                        <input ref={this.taskNameRef} autoFocus type="text" className={`flex-auto m-2 px-3 py-1 rounded-lg bg-input-dark font-medium text-text-primary placeholder-text-secondary focus:outline-none focus:ring-4 focus:ring-${this.props.color}-700 focus:ring-opacity-50`} value={this.state.value} onChange={this.handleTaskChange} onKeyDown={this.handleKeyDown} />
                     </label>
-                    <button className={`rounded-lg px-3 py-1 m-1 font-medium focus:outline-none focus:ring-4 focus:ring-${this.props.color}-700 focus:ring-opacity-50 active:bg-input-dark`} onClick={() => this.handleSaveTask}>Uložiť zmeny</button>
+                    <button className={`rounded-lg px-3 py-1 m-1 font-medium focus:outline-none focus:ring-4 focus:ring-${this.props.color}-700 focus:ring-opacity-50 active:bg-input-dark`} onClick={() => this.handleSaveTask()}>Uložiť zmeny</button>
                 </div>
             )
         }
 
         return (
             <li className={`py-1 px-2 border-b-2 border-t-2 border-${this.props.color}-700 text-${this.props.color}-900 ${softDeletedClasses} flex items-center`}>
+                <div><input type="checkbox" className={`form-checkbox ml-1 mr-4 mb-1 p-2 rounded focus:outline-none focus:ring-4 focus:ring-${this.props.color}-700 focus:ring-opacity-50`} onChange={() => this.handleCompleteTask(task)} checked={task.completed} /></div>
                 <div className={`mr-auto ml-auto break-all ${completedClass}`}>{task.task}</div>
-                <div><input type="checkbox" className={`form-checkbox ml-6 mr-1 mb-1 p-2 rounded focus:outline-none focus:ring-4 focus:ring-${this.props.color}-700 focus:ring-opacity-50`} onChange={() => this.handleCompleteTask(task)} checked={task.completed} /></div>
                 <div className={`hover:bg-${this.props.color}-400 rounded-lg p-1`} onClick={() => this.handleEditTask(task)}><FiEdit2 /></div>
                 <div className={`${softDeletedIcon} rounded-lg p-1`} onClick={() => this.handleSoftDeleteTask(task.id)}><RiDeleteBin6Line /></div>
                 <div className={`hover:bg-${this.props.color}-400 rounded-lg p-1`} onClick={() => this.handleDeleteTask(task)}><FiXSquare /></div>
@@ -99,7 +102,7 @@ const mapDispatchToProps = dispatch => ({
     removeTodo: taskId => dispatch(actions.removeTodo(taskId)),
     softDeleteTodo: taskId => dispatch(actions.softDeleteTodo(taskId)),
     completeTodo: taskId => dispatch(actions.completeTodo(taskId)),
-    editTask: task => dispatch(actions.editTodo(task))
+    editTask: (task,taskId) => dispatch(actions.editTodo(task,taskId))
 });
 
 export default connect(

@@ -18,8 +18,8 @@ export const removeTodo = taskId => ({
 export const editTodo = (text,taskId) => ({
   type: 'EDIT_TODO',
   payload: {
-    text,
-    taskId
+    text: text,
+    taskId: taskId
   }
 })
 export const softDeleteTodo = taskId => ({
