@@ -5,14 +5,13 @@ import ColorItem from './components/ColorComponent'
 import { connect } from 'react-redux';
 import * as actions from './actions';
 class App extends React.Component {
+  
   handleChangeColor = (color) => {
-    console.log(color);
-    this.rewriteColor(color);
+    this.props.rewriteColor(color);
   }
 
   render() {
     const { color } = this.props;
-    console.log(color);
 
     return (
       <div className={`bg-${color}-300 min-h-screen text-center font-robotoslab`}>

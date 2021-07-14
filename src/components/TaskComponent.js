@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit2 } from "react-icons/fi";
 import { FiXSquare } from "react-icons/fi";
@@ -9,7 +9,7 @@ class Task extends React.Component {
     constructor(task) {
         super();
         this.taskNameRef = React.createRef(null)
-        this.state = {edit:''}
+        this.state = { edit: '' }
     }
 
     handleSoftDeleteTask = (id) => {
@@ -20,11 +20,12 @@ class Task extends React.Component {
         this.props.removeTodo(task.id);
     }
 
-    handleCompleteTask = () => {
+    handleCompleteTask = (task) => {
         this.props.completeTodo(this.props.task.id)
     }
 
-    handleEditTask = () => {
+    handleEditTask = (task) => {
+        console.log("chichi");
         this.setState({ id: this.props.task.id, value: this.props.task.task })
     }
 
@@ -79,9 +80,9 @@ class Task extends React.Component {
         return (
             <li className={`py-1 px-2 border-b-2 border-t-2 border-${this.props.color}-700 text-${this.props.color}-900 ${softDeletedClasses} flex items-center`}>
                 <div className={`mr-auto ml-auto break-all ${completedClass}`}>{task.task}</div>
-                <div><input type="checkbox" className={`form-checkbox ml-6 mr-1 mb-1 p-2 rounded focus:outline-none focus:ring-4 focus:ring-${this.props.color}-700 focus:ring-opacity-50`} onChange={() => this.handleCompleteTask} checked={task.completed} /></div>
-                <div className={`hover:bg-${this.props.color}-400 rounded-lg p-1`} onClick={() => this.handleEditTask}><FiEdit2 /></div>
-                <div className={`${softDeletedIcon} rounded-lg p-1`} onClick={() => this.handleSoftDeleteTask}><RiDeleteBin6Line /></div>
+                <div><input type="checkbox" className={`form-checkbox ml-6 mr-1 mb-1 p-2 rounded focus:outline-none focus:ring-4 focus:ring-${this.props.color}-700 focus:ring-opacity-50`} onChange={() => this.handleCompleteTask(task)} checked={task.completed} /></div>
+                <div className={`hover:bg-${this.props.color}-400 rounded-lg p-1`} onClick={() => this.handleEditTask(task)}><FiEdit2 /></div>
+                <div className={`${softDeletedIcon} rounded-lg p-1`} onClick={() => this.handleSoftDeleteTask(task.id)}><RiDeleteBin6Line /></div>
                 <div className={`hover:bg-${this.props.color}-400 rounded-lg p-1`} onClick={() => this.handleDeleteTask(task)}><FiXSquare /></div>
             </li>
         )
