@@ -1,7 +1,7 @@
-const INIT_STATE = [{ id: 1, task: 'Dokončiť react appku', completed: false, softDeleted: true },
-{ id: 2, task: 'Naučiť sa react', completed: true, softDeleted: true },
-{ id: 3, task: 'Nebyť perfekcionalista', completed: true, softDeleted: false },
-{ id: 4, task: 'Deleted task', completed: false, softDeleted: false }
+const INIT_STATE = [{ id: 1, task: 'Úloha v koši', completed: false, softDeleted: true },
+{ id: 2, task: 'Splnená Úloha v koši', completed: true, softDeleted: true },
+{ id: 3, task: 'Splnená úloha', completed: true, softDeleted: false },
+{ id: 4, task: 'Nesplnená úloha', completed: false, softDeleted: false }
 ]
 
 const todos = (state = INIT_STATE, action) => {

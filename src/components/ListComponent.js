@@ -10,6 +10,12 @@ class List extends React.Component {
     };
 
     showTasks = (show) => {
+        let array = this.props.tasks
+        console.log(array);
+        // array = array.sort(function(a, b){return (Number(b.completed) - Number(a.completed))});
+        array = array.sort(function(a, b){return (b.completed )});
+        console.log(array);
+
         if (show === "Úlohy") {
             return (this.props.tasks.filter(task => !task.completed && !task.softDeleted)).map((task) => <Task key={task.id} task={task} />
             )
