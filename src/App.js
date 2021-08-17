@@ -12,6 +12,7 @@ class App extends React.Component {
 
   render() {
     const { color, tasks } = this.props;
+    let visibility = tasks.every((item) => item.completed) ? '' : 'opacity-0';
 
     return (
       <div className={`bg-${color}-300 min-h-screen text-center font-robotoslab`}>
@@ -29,6 +30,7 @@ class App extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
 
+          <h1 className={`mx-8 text-${color}-700 font-sansita text-5xl text-center py-4 ${visibility}`}>Paradzinka!</h1>
           <h1 className={`mx-8 text-${color}-700 font-sansita text-5xl text-center py-4`}>Marekov To-Do-List</h1>
         </header>
         <List />
