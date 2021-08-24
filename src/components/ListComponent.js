@@ -7,10 +7,11 @@ export default class List extends React.Component {
         super(props)
         this.state = {
             color: this.props.color,
-            tasks: [{ id: 1, task: 'Dokončiť react appku', completed: false, softDeleted: true },
-            { id: 2, task: 'Naučiť sa react', completed: true, softDeleted: true },
-            { id: 3, task: 'Nebyť perfekcionalista', completed: true, softDeleted: false },
-            { id: 4, task: 'Deleted task', completed: false, softDeleted: false }],
+            tasks: [{ id: 1, task: 'Úloha v koši', completed: false, softDeleted: true },
+            { id: 2, task: 'Splnená Úloha v koši', completed: true, softDeleted: true },
+            { id: 3, task: 'Splnená úloha', completed: true, softDeleted: false },
+            { id: 4, task: 'Nesplnená úloha', completed: false, softDeleted: false }
+            ],
             show: 'Všetky'
         }
     }
@@ -56,6 +57,8 @@ export default class List extends React.Component {
     }
 
     showTasks = (show) => {
+        this.state.tasks.sort(function (a, b) { return (b.completed - a.completed) });
+
         if (show === "Úlohy") {
             return (this.state.tasks.filter(task => !task.completed && !task.softDeleted)).map((task) => <Task softDelete={this.handleSoftDeleteTask} hardDelete={this.handleDeleteTask} complete={this.handleCompleteTask} editTask={this.editTask} key={task.id} task={task} color={this.props.color} />
             )
@@ -75,27 +78,27 @@ export default class List extends React.Component {
 
         return (
             <>
-                <Form color={this.state.color} odoslanie={this.handleChangeTask} />
+                <Form color={this.props.color} odoslanie={this.handleChangeTask} />
                 <div className="mt-8 flex justify-center">
 
-                    <div className={`w-1/2 text-2xl bg-${this.state.color}-500 border-4 border-b-2 border-${this.state.color}-700 inline-block`}>
-                        <p className={`p-1 border-2 border-b-4 border-${this.state.color}-700 bg-${this.state.color}-400 tracking-wide`}>Úlohy:</p>
+                    <div className={`w-1/2 text-2xl bg-${this.props.color}-500 border-4 border-b-2 border-${this.props.color}-700 inline-block`}>
+                        <p className={`p-1 border-2 border-b-4 border-${this.props.color}-700 bg-${this.props.color}-400 tracking-wide`}>Úlohy:</p>
                         <ol>
                             {this.showTasks(this.state.show)}
                         </ol>
                     </div>
 
                     <Dropdown>
-                        <Dropdown.Toggle drop="down" className={`mx-8 py-1 px-2 w-3/5 px-auto text-${this.state.color}-900 border-4 border-${this.state.color}-700 rounded-lg bg-${this.state.color}-300  hover:bg-${this.state.color}-400`}>
+                        <Dropdown.Toggle drop="down" className={`mx-8 py-1 px-2 w-3/5 px-auto text-${this.props.color}-900 border-4 border-${this.props.color}-700 rounded-lg bg-${this.props.color}-300  hover:bg-${this.props.color}-400`}>
                             {this.state.show}
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu className={`block py-1 mt-0.5 px-2 border-4 border-${this.state.color}-500 text-${this.state.color}-900 rounded-lg bg-${this.state.color}-300`}>
-                            <Dropdown.Item onClick={() => this.setShow("Úlohy")} className={`block mt-0.5 px-2 text-${this.state.color}-900 rounded-lg bg-${this.state.color}-300 hover:bg-${this.state.color}-400`}>Úlohy</Dropdown.Item>
+                        <Dropdown.Menu className={`block py-1 mt-0.5 px-2 border-4 border-${this.props.color}-500 text-${this.props.color}-900 rounded-lg bg-${this.props.color}-300`}>
+                            <Dropdown.Item onClick={() => this.setShow("Úlohy")} className={`block mt-0.5 px-2 text-${this.props.color}-900 rounded-lg bg-${this.props.color}-300 hover:bg-${this.props.color}-400`}>Úlohy</Dropdown.Item>
                             <Dropdown.Divider className="mt-0.5 border-b-2 border-black" />
-                            <Dropdown.Item onClick={() => this.setShow("Všetky")} className={`block mt-0.5 px-2 text-${this.state.color}-900 rounded-lg bg-${this.state.color}-300 hover:bg-${this.state.color}-400`}>Všetky</Dropdown.Item>
-                            <Dropdown.Item onClick={() => this.setShow("Splnené")} className={`block mt-0.5 px-2 text-${this.state.color}-900 rounded-lg bg-${this.state.color}-300 hover:bg-${this.state.color}-400`}>Splnené</Dropdown.Item>
-                            <Dropdown.Item onClick={() => this.setShow("Kôš")} className={`block mt-0.5 px-2 text-${this.state.color}-900 rounded-lg bg-${this.state.color}-300 hover:bg-${this.state.color}-400`}>Kôš</Dropdown.Item>
+                            <Dropdown.Item onClick={() => this.setShow("Všetky")} className={`block mt-0.5 px-2 text-${this.props.color}-900 rounded-lg bg-${this.props.color}-300 hover:bg-${this.props.color}-400`}>Všetky</Dropdown.Item>
+                            <Dropdown.Item onClick={() => this.setShow("Splnené")} className={`block mt-0.5 px-2 text-${this.props.color}-900 rounded-lg bg-${this.props.color}-300 hover:bg-${this.props.color}-400`}>Splnené</Dropdown.Item>
+                            <Dropdown.Item onClick={() => this.setShow("Kôš")} className={`block mt-0.5 px-2 text-${this.props.color}-900 rounded-lg bg-${this.props.color}-300 hover:bg-${this.props.color}-400`}>Kôš</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
