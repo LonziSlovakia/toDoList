@@ -69,8 +69,8 @@ function Task({ task, color, softDelete, hardDelete, complete, editTask }) {
 
     return (
         <li className={`py-1 px-2 border-b-2 border-t-2 border-${color}-700 text-${color}-900 ${softDeletedClasses} flex items-center`}>
+            <div><input type="checkbox" className={`form-checkbox mr-1 mb-1 p-2 rounded focus:outline-none focus:ring-4 focus:ring-${color}-700 focus:ring-opacity-50`} onChange={handleCompleteTask} checked={task.completed} /></div>
             <div className={`mr-auto ml-auto break-all ${completedClass}`}>{task.task}</div>
-            <div><input type="checkbox" className={`form-checkbox ml-6 mr-1 mb-1 p-2 rounded focus:outline-none focus:ring-4 focus:ring-${color}-700 focus:ring-opacity-50`} onChange={handleCompleteTask} checked={task.completed} /></div>
             <div className={`hover:bg-${color}-400 rounded-lg p-1`} onClick={handleEditTask}><FiEdit2 /></div>
             <div className={`${softDeletedIcon} rounded-lg p-1`} onClick={handleRemoveTask}><RiDeleteBin6Line /></div>
             <div className={`hover:bg-${color}-400 rounded-lg p-1`} onClick={() => hardDelete(task)}><FiXSquare /></div>

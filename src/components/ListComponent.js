@@ -57,10 +57,10 @@ export default class List extends React.Component {
 
     showTasks = (show) => {
         if (show === "Úlohy") {
-            return (this.state.tasks.filter(task => !task.completed && !task.softDeleted)).map((task) => <Task softDelete={this.handleSoftDeleteTask} hardDelete={this.handleDeleteTask} complete={this.handleCompleteTask} editTask={this.editTask} key={task.id} task={task} color={this.state.color} />
+            return (this.state.tasks.filter(task => !task.completed && !task.softDeleted)).map((task) => <Task softDelete={this.handleSoftDeleteTask} hardDelete={this.handleDeleteTask} complete={this.handleCompleteTask} editTask={this.editTask} key={task.id} task={task} color={this.props.color} />
             )
         } else if (show === "Všetky") {
-            return this.state.tasks.map((task) => <Task softDelete={this.handleSoftDeleteTask} hardDelete={this.handleDeleteTask} complete={this.handleCompleteTask} editTask={this.editTask} key={task.id} task={task} color={this.state.color} />
+            return this.state.tasks.map((task) => <Task softDelete={this.handleSoftDeleteTask} hardDelete={this.handleDeleteTask} complete={this.handleCompleteTask} editTask={this.editTask} key={task.id} task={task} color={this.props.color} />
             )
         } else if (show === "Splnené") {
             return (this.state.tasks.filter(task => task.completed)).map((task) => <Task softDelete={this.handleSoftDeleteTask} hardDelete={this.handleDeleteTask} complete={this.handleCompleteTask} editTask={this.editTask} key={task.id} task={task} color={this.props.color} />
